@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+
+<div style="text-align: center; margin-top: 50px;">
+  
+  <a href="{% url 'upload_photo_page' %}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Upload photo</a>
+  <a href="{% url 'run_code' %}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Run Code</a>
+  <a href="{% url 'view_attendance' %}" style="display: inline-block; margin-left: 10px; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">View Attendance</a>
+</div>
+{% endblock body %} 
+ 

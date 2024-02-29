@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Photo Page</title>
+    <style>
+        body {
+            background-color: black; /* Fallback color */
+            background-image: url('path_to_your_image.jpg'); /* Replace 'path_to_your_image.jpg' with the actual path to your image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        /* Additional styles for the content */
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .content a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>Welcome to the Upload Photo Page</h1>
+        <video id="video" width="640" height="480" autoplay style="margin-bottom: 10px;"></video>
+        <button id="capture-btn" style="display: block; margin: 0 auto; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Capture photo</button>
+        <canvas id="canvas" style="display: none;"></canvas>
+        <form id="upload-form" method="post" enctype="multipart/form-data" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" id="photo-data" name="photo_data">
+            <button type="submit" style="display: block; margin: 0 auto; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Upload photo</button>
+        </form>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        <button onclick="goToHome()" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Back to Home</button>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const captureButton = document.getElementById('capture-btn');
+        const uploadForm = document.getElementById('upload-form');
+        const photoDataInput = document.getElementById('photo-data');
+
+        // Create a media stream from the video element
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Error accessing the camera:', error);
+            });
+
+        // Capture photo from video stream
+        captureButton.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const photoData = canvas.toDataURL('image/jpeg');
+            photoDataInput.value = photoData;
+            uploadForm.submit();
+        });
+        function goToHome() {
+        window.location.href = "{% url 'home' %}";
+    }
+    </script>
+</body>
+</html>

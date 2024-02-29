@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Attendance</title>
+    <style>
+        body {
+            background-color: black;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white; /* Set text color to white */
+        }
+        table {
+            margin: 0 auto; /* Center-align the table */
+            color: white; /* Set text color to white */
+        }
+        .container-fluid {
+            background-color: #007bff; /* Set background color for container */
+            padding: 10px; /* Add some padding */
+        }
+        .navbar-brand {
+            color: white; /* Set text color for navbar brand */
+            font-size: 24px; /* Adjust font size */
+            font-weight: bold; /* Add some boldness */
+        }
+        .navbar-toggler-icon {
+            color: white; /* Set color for toggler icon */
+        }
+        /* Style for message display */
+        .message {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Service Learning</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- Add your navbar items here if needed -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Display message -->
+    <div class="message">Attendance</div>
+
+    <h1>Attendance Details</h1>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% else %}
+        <p>Date: {{ date }}</p>
+        <table border="1">
+            {% for row in data %}
+                <tr>
+                    {% for cell in row %}
+                        <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
